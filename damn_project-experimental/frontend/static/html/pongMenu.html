@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pong Menu</title>
+</head>
+
+<body class="h-screen flex items-center justify-center bg-gray-900">
+    <div class="w-full max-w-screen-lg p-4 space-y-4">
+        <!-- Toast Notification -->
+        <div class="fixed top-0 right-0 p-3">
+            <div id="liveToast" class="bg-transparent border-none" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="flex glass">
+                    <div class="toast-body">
+                        <div class="flex justify-center items-center p-2">
+                            <p class="text-white text-center inline-block mr-2" id="toastBody"></p>
+                            <p class="text-white text-center inline-block" id="toastValue"></p>
+                        </div>
+                    </div>
+                    <button type="button" class="text-white ml-2" data-bs-dismiss="toast" aria-label="Close">✕</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <div class="text-center flex flex-col">
+            <p class="text-white text-4xl" animated-letters data-translate="pong menu"></p>
+        </div>
+
+        <!-- Divider -->
+        <div class="flex justify-center my-3">
+            <hr class="border-white w-96">
+        </div>
+
+        <!-- Game Mode and Style -->
+        <div class="text-center flex flex-col mb-4">
+            <p class="text-white text-2xl mt-3">
+                <span id="currentGamemodeLabel"></span>・<span id="currentGamestyleLabel"></span>
+            </p>
+        </div>
+
+        <!-- Players Container -->
+        <div class="flex flex-col">
+            <div class="flex justify-center gap-4" id="playersContainer"></div>
+        </div>
+
+        <!-- Game Settings Buttons -->
+        <div class="mt-4 mb-4 p-5 glass flex justify-center space-x-4">
+            <button role="button" class="btn btn-lg text-white bg-gray-700 hover:bg-gray-600 p-2 rounded-md" id="btnKeys" data-translate="keys">Keys</button>
+            <button role="button" class="btn btn-lg text-white bg-gray-700 hover:bg-gray-600 p-2 rounded-md" id="btnGamemode" data-translate="gamemode">Gamemode</button>
+            <button role="button" class="btn btn-lg text-white bg-gray-700 hover:bg-gray-600 p-2 rounded-md" id="btnGamestyle" data-translate="gamestyle">Gamestyle</button>
+        </div>
+
+        <!-- Modal (Tailwind does not have modals by default) -->
+        <div class="hidden fixed inset-0 bg-black bg-opacity-50 justify-center items-center z-50" id="settingsModal">
+            <div class="bg-transparent border-none w-full max-w-3xl">
+                <div class="flex justify-center glass p-5" id="settingsModalContent">
+                    <!-- Modal Content Here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Points Range Container -->
+        <div class="flex justify-center glass p-5" id="pointsRangeContainer">
+            <!-- Points Range Content Here -->
+        </div>
+
+        <!-- Start Game Button -->
+        <div class="text-center mt-5">
+            <a role="button" id="btnStartGame" class="btn btn-lg text-white bg-gray-700 hover:bg-gray-600 p-3 rounded-md" href="/pong" data-link data-translate="start game">Start Game</a>
+        </div>
+
+        <!-- Return Button -->
+        <div class="text-center mt-5 flex justify-center">
+            <a role="button" class="btn btn-lg text-light bg-gray-700 hover:bg-gray-600 p-3 rounded-md flex items-center justify-center" href="/games" data-link>
+                <img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow">
+            </a>
+        </div>
+
+        <!-- Mobile Page Warning -->
+        <div class="container hidden h-full flex-col items-center justify-center games-page-mobile">
+            <div class="p-5 glass">
+                <p class="text-white text-center p-0 m-0" data-translate="games-not-available-mobile"></p>
+            </div>
+            <div class="flex justify-center mb-3">
+                <div class="text-center mt-5 flex justify-center">
+                    <a role="button" class="btn btn-lg text-light bg-gray-700 hover:bg-gray-600 p-3 rounded-md flex items-center justify-center" href="/" data-link>
+                        <img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
