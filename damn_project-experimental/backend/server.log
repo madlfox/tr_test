@@ -223,3 +223,6 @@
 {"level":30,"time":1747602885641,"pid":18,"hostname":"37ca71a2d488","reqId":"req-5","res":{"statusCode":400},"responseTime":4.919349999865517,"msg":"request completed"}
 {"level":30,"time":1747602897839,"pid":18,"hostname":"37ca71a2d488","reqId":"req-6","req":{"method":"POST","url":"/api/login","hostname":"localhost","remoteAddress":"172.18.0.4","remotePort":41740},"msg":"incoming request"}
 {"level":30,"time":1747602897904,"pid":18,"hostname":"37ca71a2d488","reqId":"req-6","res":{"statusCode":200},"responseTime":65.64435399998911,"msg":"request completed"}
+{"level":30,"time":1747603512265,"pid":18,"hostname":"19f60f38444d","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1747603523826,"pid":18,"hostname":"19f60f38444d","reqId":"req-1","req":{"method":"GET","url":"/api/profile","hostname":"localhost","remoteAddress":"172.18.0.4","remotePort":49820},"msg":"incoming request"}
+{"level":30,"time":1747603523831,"pid":18,"hostname":"19f60f38444d","reqId":"req-1","res":{"statusCode":401},"responseTime":3.6540850000455976,"msg":"request completed"}
