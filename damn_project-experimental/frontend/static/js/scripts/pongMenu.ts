@@ -240,7 +240,7 @@ export class PongMenu {
 	currentGamemodeLabel: HTMLElement;
 	currentGamestyleLabel: HTMLElement;
 	toastNotification: HTMLElement;
-	toastBootstrap: any;
+	// toastBootstrap: any;
 	toastBody: HTMLElement;
 	toastValue: HTMLElement;
 	boundKeyDownSettings: (e: KeyboardEvent) => void;

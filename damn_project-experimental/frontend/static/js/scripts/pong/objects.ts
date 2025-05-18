@@ -2,7 +2,7 @@
 // @ts-ignore
 import { updateTextForElem } from "../../utils/languages.js";
 
-declare const bootstrap: any;
+// declare const bootstrap: any;
 //import * as bootstrap from "bootstrap";
 
 export class Tournament {

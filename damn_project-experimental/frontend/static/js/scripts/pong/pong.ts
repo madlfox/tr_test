@@ -5,7 +5,7 @@
 	import { BASE_URL } from '../../index.js';
 	import { updateTextForElem } from "../../utils/languages.js";
 	
-	declare const bootstrap: any;
+	// declare const bootstrap: any;
 
 	export let eventListeners: { [key: string]: EventListener } = {};
 	
@@ -32,7 +32,7 @@
 		leftPaddleName: HTMLElement;
 		rightPaddleName: HTMLElement;
 		toastNotification: HTMLElement;
-		toastBootstrap: any;
+		// toastBootstrap: any;
 		toastBody: HTMLElement;
 	
 		pWidth: number = 12;
@@ -427,7 +427,7 @@ endGame(winner: string): void {
 			console.log("Could not save game in user history. Is user logged ?")
 		} else if (response.status < 300) {
 			updateTextForElem(this.toastBody, "game-saved");
-			this.toastBootstrap.show();
+			// this.toastBootstrap.show();
 		}
 	}
 
