@@ -1,7 +1,7 @@
-// utils/authFetch.ts
+
 import { navigateTo } from "../index.js";
 
-// ✅ Interface: Omit `body` from RequestInit and re-declare it to avoid conflicts
+
 interface AuthFetchOptions extends Omit<RequestInit, "body"> {
   body?: BodyInit | Record<string, any> | null;
 }
@@ -16,16 +16,12 @@ export async function authFetch(url: string, options: AuthFetchOptions = {}): Pr
 
   const isFormData = options.body instanceof FormData;
 
-  // ✅ Initialize Headers correctly
   const headers: Headers = new Headers(options.headers);
   headers.set("Authorization", `Bearer ${token}`);
 
-  // ✅ Set default Content-Type for JSON if not a FormData
-  if (!isFormData && !headers.has("Content-Type")) {
+    if (!isFormData && !headers.has("Content-Type")) 
     headers.set("Content-Type", "application/json");
-  }
-
-  // ✅ Handle body transformation correctly
+  
   if (
     !isFormData &&
     headers.get("Content-Type") === "application/json" &&
@@ -38,7 +34,7 @@ export async function authFetch(url: string, options: AuthFetchOptions = {}): Pr
     }
   }
 
-  // ✅ Safer headers logging (no `.entries()`)
+
   const headersObj: Record<string, string> = {};
   headers.forEach((value, key) => {
     headersObj[key] = value;
@@ -51,7 +47,6 @@ export async function authFetch(url: string, options: AuthFetchOptions = {}): Pr
   });
 
   try {
-    // ✅ Remove `Record<string, any>` from body if it exists
     const requestInit: RequestInit = {
       ...options,
       headers,
@@ -79,4 +74,3 @@ export async function authFetch(url: string, options: AuthFetchOptions = {}): Pr
     throw error;
   }
 }
-///??

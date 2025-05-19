@@ -164,12 +164,10 @@ loadJS() {
   // Initialize the Pong game
   this.pongGame = new PongGame();
 
-
   //cursor click effect added
     setTimeout(() => {
     initCursorClickEffect();
   }, 200);
-  //click effect 
   
   // Wait for DOM content to be fully loaded
   setTimeout(() => {
@@ -227,10 +225,6 @@ loadJS() {
 
   }, 200); // Delay to make sure buttons are in the DOM
 }
-
-
-
-
 
 
 stopJS(){

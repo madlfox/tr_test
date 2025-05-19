@@ -14,7 +14,6 @@ export function signUp(): void {
     const emailErrorElem = document.getElementById('email-error') as HTMLElement;
     const passwordErrorElem = document.getElementById('password-error') as HTMLElement;
 
-    // Add Tailwind classes
     usernameElem.classList.add('border', 'border-gray-300', 'rounded', 'p-2', 'w-full');
     emailElem.classList.add('border', 'border-gray-300', 'rounded', 'p-2', 'w-full');
     passwordElem.classList.add('border', 'border-gray-300', 'rounded', 'p-2', 'w-full');

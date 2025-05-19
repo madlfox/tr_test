@@ -1,230 +1,3 @@
-
-// //@ts-ignore
-// import { BASE_URL, navigateTo } from "../index.js";
-// import { updateTextForElem } from "../utils/languages.js";
-// import { isUserConnected } from "../utils/utils.js";
-
-// // Types
-// interface User {
-// 	username: string;
-// 	profile_picture_url: string;
-// }
-
-// interface Friend extends User {
-// 	online_status: boolean;
-// }
-
-// // Function that will be called when the view is loaded
-// export async function friends(): Promise<void> {
-// 	if (!(await isUserConnected())) {
-// 		navigateTo('/signin');
-// 		return;
-// 	}
-
-// 	const userElementsContainer = document.getElementById('user-elements') as HTMLElement | null;
-// 	const friendElementsContainer = document.getElementById('friend-elements') as HTMLElement | null;
-
-// 	if (!userElementsContainer || !friendElementsContainer) {
-// 		console.error("Containers not found");
-// 		return;
-// 	}
-
-// 	// Fill users (non-friends)
-// 	const fillUsersContainer = async (): Promise<void> => {
-// 		try {
-// 			const responseProfile = await fetch(`${BASE_URL}/api/profile`);
-// 			if (!responseProfile.ok) {
-// 				navigateTo('/signin');
-// 				return;
-// 			}
-
-// 			const { user } = await responseProfile.json();
-// 			const currentUsername: string = user.username;
-
-// 			const responseUsers = await fetch(`${BASE_URL}/api/users_list`);
-// 			if (!responseUsers.ok) {
-// 				console.error("Failed to fetch users");
-// 				return;
-// 			}
-
-// 			const users: User[] = await responseUsers.json();
-
-// 			// Empty the container
-// 			userElementsContainer.innerHTML = '';
-
-// 			// If only the current user exists
-// 			// if (users.length <= 1) {
-// 			// 	userElementsContainer.innerHTML = `<div id="user-error" class="text-white" data-translate="no users"></div>`;
-// 			// 	updateTextForElem(document.getElementById('user-error'));
-// 			// 	return;
-// 			// }
-// 			const userErrorElem = document.getElementById('user-error') as HTMLElement | null;
-// 			if (userErrorElem) {
-// 				updateTextForElem(userErrorElem, 'no users');
-// 			}
-			
-// 			const responseFriends = await fetch(`${BASE_URL}/api/friends_list`);
-// 			const friends: Friend[] = await responseFriends.json();
-
-// 			for (const user of users) {
-// 				if (user.username === currentUsername) continue;
-// 				if (friends.some(friend => friend.username === user.username)) continue;
-
-// 				const userElement = createUserElement(user, async () => {
-// 					await addFriend(user.username);
-// 					await refresh();
-// 				});
-
-// 				userElementsContainer.appendChild(userElement);
-// 			}
-// 		} catch (error) {
-// 			console.error("Error in fillUsersContainer:", error);
-// 		}
-// 	};
-
-// 	// Fill friends
-// 	const fillFriendsContainer = async (): Promise<void> => {
-// 		try {
-// 			const responseFriends = await fetch(`${BASE_URL}/api/friends_list`);
-// 			if (!responseFriends.ok) {
-// 				console.error("Failed to fetch friends");
-// 				return;
-// 			}
-
-// 			const friends: Friend[] = await responseFriends.json();
-// 			friendElementsContainer.innerHTML = '';
-
-// 			// if (friends.length === 0) {
-// 			// 	friendElementsContainer.innerHTML = `<div class="text-white friend-error" data-translate="no friends"></div>`;
-// 			// 	updateTextForElem(document.querySelector('.friend-error') as HTMLElement);
-// 			// 	return;
-// 			// }
-// 			const friendErrorElem = document.querySelector('.friend-error') as HTMLElement | null;
-// 			if (friendErrorElem) {
-// 				updateTextForElem(friendErrorElem, 'no friends');
-// 			}
-			
-// 			for (const friend of friends) {
-// 				const friendElement = createFriendElement(friend, async () => {
-// 					await removeFriend(friend.username);
-// 					await refresh();
-// 				});
-
-// 				friendElementsContainer.appendChild(friendElement);
-// 			}
-// 		} catch (error) {
-// 			console.error("Error in fillFriendsContainer:", error);
-// 		}
-// 	};
-
-// 	// Helpers
-// 	const addFriend = async (username: string): Promise<void> => {
-// 		const response = await fetch(`${BASE_URL}/api/add_friend`, {
-// 			method: 'POST',
-// 			headers: { 'Content-Type': 'application/json' },
-// 			body: JSON.stringify({ username })
-// 		});
-// 		if (!response.ok) console.error("Couldn't send a friend request.");
-// 	};
-
-// 	const removeFriend = async (username: string): Promise<void> => {
-// 		const response = await fetch(`${BASE_URL}/api/remove_friend`, {
-// 			method: 'POST',
-// 			headers: { 'Content-Type': 'application/json' },
-// 			body: JSON.stringify({ username })
-// 		});
-// 		if (!response.ok) console.error("Couldn't send a friend removal request.");
-// 	};
-
-// 	const refresh = async (): Promise<void> => {
-// 		await fillUsersContainer();
-// 		await fillFriendsContainer();
-// 	};
-
-// 	const createUserElement = (user: User, onAdd: () => Promise<void>): HTMLElement => {
-// 		const userDiv = document.createElement('div');
-// 		userDiv.className = 'd-flex align-items-center';
-
-// 		const profilePic = document.createElement('img');
-// 		profilePic.src = user.profile_picture_url;
-// 		profilePic.alt = 'profile picture';
-// 		profilePic.className = 'profile-pic-list';
-// 		profilePic.id = 'avatar';
-
-// 		const userName = document.createElement('p');
-// 		userName.className = 'm-0 ms-2';
-// 		userName.textContent = user.username;
-
-// 		userDiv.appendChild(profilePic);
-// 		userDiv.appendChild(userName);
-
-// 		const plusIcon = document.createElement('img');
-// 		plusIcon.src = 'static/assets/UI/icons/plus.svg';
-// 		plusIcon.alt = 'plus icon';
-// 		plusIcon.className = 'plus-icon-list me-1';
-// 		plusIcon.addEventListener('click', onAdd);
-
-// 		const container = document.createElement('div');
-// 		container.className = 'd-flex justify-content-between align-items-center user-element tabbable';
-// 		container.appendChild(userDiv);
-// 		container.appendChild(plusIcon);
-
-// 		container.tabIndex = 0;
-// 		container.addEventListener('keydown', (event: KeyboardEvent) => {
-// 			if (event.key === 'Enter') onAdd();
-// 		});
-
-// 		return container;
-// 	};
-
-// 	const createFriendElement = (friend: Friend, onRemove: () => Promise<void>): HTMLElement => {
-// 		const friendDiv = document.createElement('div');
-// 		friendDiv.className = 'd-flex align-items-center';
-
-// 		const profilePic = document.createElement('img');
-// 		profilePic.src = friend.profile_picture_url;
-// 		profilePic.alt = 'profile picture';
-// 		profilePic.className = 'profile-pic-list';
-
-// 		const userName = document.createElement('p');
-// 		userName.className = 'm-0 ms-2';
-// 		userName.textContent = friend.username;
-
-// 		const onlineStatus = document.createElement('img');
-// 		onlineStatus.src = friend.online_status
-// 			? 'static/assets/UI/icons/connected.svg'
-// 			: 'static/assets/UI/icons/disconnected.svg';
-// 		onlineStatus.alt = 'online status';
-// 		onlineStatus.className = 'online-icon-list ms-2';
-
-// 		friendDiv.appendChild(profilePic);
-// 		friendDiv.appendChild(userName);
-// 		friendDiv.appendChild(onlineStatus);
-
-// 		const minusIcon = document.createElement('img');
-// 		minusIcon.src = 'static/assets/UI/icons/minus.svg';
-// 		minusIcon.alt = 'minus icon';
-// 		minusIcon.className = 'minus-icon-list me-1';
-// 		minusIcon.addEventListener('click', onRemove);
-
-// 		const container = document.createElement('div');
-// 		container.className = 'd-flex justify-content-between align-items-center friend-element tabbable';
-// 		container.appendChild(friendDiv);
-// 		container.appendChild(minusIcon);
-
-// 		container.tabIndex = 0;
-// 		container.addEventListener('keydown', (event: KeyboardEvent) => {
-// 			if (event.key === 'Enter') onRemove();
-// 		});
-
-// 		return container;
-// 	};
-
-// 	// Initialize
-// 	await fillUsersContainer();
-// 	await fillFriendsContainer();
-// }
-
 import { BASE_URL, navigateTo } from "../index.js";
 import { updateTextForElem } from "../utils/languages.js";
 import { isUserConnected } from "../utils/utils.js";
@@ -373,23 +146,16 @@ export async function friends(): Promise<void> {
     if (responseFriends.status === 200) {
       const friends: Friend[] = await responseFriends.json();
 
-      // If the friend list is empty
-    //   if (friends.length === 0) {
-    //     friendElementsContainer.innerHTML = `<div class="text-white friend-error" data-translate="no friends"></div>`;
-    //     updateTextForElem(document.querySelector('.friend-error'), 'no friends');
-    //     return;
-    //   }
+ 
 if (friends.length === 0) {
         friendElementsContainer.innerHTML = `<div class="text-white friend-error" data-translate="no friends"></div>`;
         
-        // ✅ Added null check and safe cast
         const friendErrorElem = document.querySelector('.friend-error') as HTMLElement | null;
         if (friendErrorElem) {
           updateTextForElem(friendErrorElem, 'no friends');
         }
         return;
       }
-      // Empty the container
       friendElementsContainer.innerHTML = '';
 
       friends.forEach(async (friend: Friend) => {
@@ -458,7 +224,6 @@ if (friends.length === 0) {
       });
     }
   };
-
   await fillUsersContainter();
   await fillFriendsContainter();
 }

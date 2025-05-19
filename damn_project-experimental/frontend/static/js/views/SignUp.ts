@@ -19,10 +19,9 @@ export default class SignUpView extends AbstractView {
         requestAnimationFrame(() => {
             signUp();
         });
-        //  signUp(); // <-- Await the execution
+        //  signUp(); // Await the execution
     }
 
     stopJS(): void {
-        // No loop in this view
     }
 }

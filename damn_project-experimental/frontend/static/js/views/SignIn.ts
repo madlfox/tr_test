@@ -15,20 +15,16 @@ export default class SignInView extends AbstractView {
         return res.text();
     }
     loadJS(): any{
-        // Wait for the next paint cycle
-// Wait for the next render cycle
 requestAnimationFrame(() => {
     signIn();
 });
             // signIn();
     }
-    
-    
+
         // await signIn(); // <-- Await the execution
     
 
     stopJS(): void {
-        // No loop in this view
         // window.removeEventListener("DOMContentLoaded", signIn);
     }
 }

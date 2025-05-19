@@ -46,7 +46,6 @@ export async function pongStatistics(): Promise<void> {
         return;
     }
 
-    // Select elements
     const pvpBtn = document.getElementById('pvp-stat-btn') as HTMLButtonElement;
     const aiBtn = document.getElementById('ai-stat-btn') as HTMLButtonElement;
     const tournamentBtn = document.getElementById('tournament-stat-btn') as HTMLButtonElement;
@@ -80,18 +79,13 @@ export async function pongStatistics(): Promise<void> {
                 const tr = document.createElement('tr');
                 const columns = ['total_pong_matches', 'total_pong_time'];
                const td1 = document.createElement('td');
-td1.textContent = String(responseData.total_pong_matches);
-tr.appendChild(td1);
+                td1.textContent = String(responseData.total_pong_matches);
+                tr.appendChild(td1);
 
-const td2 = document.createElement('td');
-td2.textContent = formatSeconds(responseData.total_pong_time);
-tr.appendChild(td2);
+                const td2 = document.createElement('td');
+                td2.textContent = formatSeconds(responseData.total_pong_time);
+                tr.appendChild(td2);
 
-				// columns.forEach(column => {
-                //     const td = document.createElement('td');
-                //     td.textContent = column === 'total_pong_time' ? formatSeconds(responseData[column]) : String(responseData[column]);
-                //     tr.appendChild(td);
-                // });
                 tbody.appendChild(tr);
             }
         };

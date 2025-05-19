@@ -364,19 +364,7 @@ overlay.addEventListener('click', () => {
 });
 
 
-// 	// Close with `Escape` key
-// 	document.addEventListener('keydown', (event) => {
-// 		if (event.key === 'Escape') {
-// 			// this.settingsModal.classList.add('hidden');
-// 			if (this.settingsModal) {
-//     this.settingsModal.classList.add('hidden');
-// } else {
-//     console.error("Error: settingsModal element not found in DOM.");
-// }
 
-// 			overlay.classList.add('hidden');
-// 		}
-// 	});
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         this.closeModal('settingsModal');

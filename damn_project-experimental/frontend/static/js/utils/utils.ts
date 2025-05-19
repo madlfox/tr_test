@@ -1,7 +1,6 @@
-//changed
 
 import { BASE_URL, navigateTo } from '../index.js';
-import { authFetch } from './authFetch.js'; // make sure the path is correct
+import { authFetch } from './authFetch.js'; 
 
 // Function to check if the user is connected (authenticated)
 export const isUserConnected = async (): Promise<boolean> => {

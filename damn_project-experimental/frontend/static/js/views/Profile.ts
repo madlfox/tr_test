@@ -2,14 +2,6 @@
 import AbstractView from "./AbstractView.js";
 import { profile } from "../scripts/profile.js";
 
-// // Optional: abstract base view interface
-// type AbstractViewType = {
-// 	setTitle(title: string): void;
-// 	getHtml(): Promise<string>;
-// 	loadJS?(): void;
-// 	stopJS?(): void;
-// 	cleanUpEventListeners?(): void;
-// };
 
 export default class ProfileView extends AbstractView {
 	constructor() {
@@ -24,12 +16,10 @@ export default class ProfileView extends AbstractView {
 		const res = await fetch("static/html/profile.html");
 		return res.text();
 	}
-//????????
 	async loadJS(): Promise<void> {
 		await profile();
 	}
 
 	stopJS(): void {
-		// No loop in this view
 	}
 }

@@ -1,11 +1,9 @@
 
-	//@ts-ignore
-	import { Ball, Pad, Tournament, Timer } from "./objects.js";
-		//@ts-ignore
+import { Ball, Pad, Tournament, Timer } from "./objects.js";
 	import { BASE_URL } from '../../index.js';
 	import { updateTextForElem } from "../../utils/languages.js";
 	
-	// declare const bootstrap: any;
+
 
 	export let eventListeners: { [key: string]: EventListener } = {};
 	
@@ -32,7 +30,6 @@
 		leftPaddleName: HTMLElement;
 		rightPaddleName: HTMLElement;
 		toastNotification: HTMLElement;
-		// toastBootstrap: any;
 		toastBody: HTMLElement;
 	
 		pWidth: number = 12;
@@ -64,7 +61,6 @@
 		interval: ReturnType<typeof setInterval> | null = null;
 		boundPongHandleKeyDown: EventListener;
 		boundPongHandleKeyUp: EventListener;
-	//	drawObjects: () => void;
 	
 		constructor() {
 			this.cvs = document.getElementById('canvas') as HTMLCanvasElement;
@@ -79,10 +75,8 @@
 			this.tournamentModalNextMatch = document.getElementById('nextMatchButton')!;
 
 			this.matchScore = document.getElementById('matchScore')!;
-			// this.modalColorBox1 = document.getElementById('colorBox1')!;
-			// this.modalColorBox2 = document.getElementById('colorBox2')!;
 			this.modalColorBox1 = document.getElementById('colorBoxLeft')!;
-this.modalColorBox2 = document.getElementById('colorBoxRight')!;
+			this.modalColorBox2 = document.getElementById('colorBoxRight')!;
 
 			this.colorBoxLeft = document.getElementById('colorBoxLeft')!;
 			this.colorBoxRight = document.getElementById('colorBoxRight')!;
@@ -92,7 +86,6 @@ this.modalColorBox2 = document.getElementById('colorBoxRight')!;
 			this.leftPaddleName = document.getElementById('leftPaddleName')!;
 			this.rightPaddleName = document.getElementById('rightPaddleName')!;
 			this.toastNotification = document.getElementById('liveToast')!;
-			// this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
 			this.toastBody = document.getElementById('toastBody')!;
 	
 			const gamemodeString = localStorage.getItem('pongGamemode');
@@ -133,11 +126,9 @@ this.modalColorBox2 = document.getElementById('colorBoxRight')!;
 			this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
 			this.objectiveLabel.textContent = this.objective.toString();
 	
-			// this.boundPongHandleKeyDown = this.handleKeyDown.bind(this);
-			// this.boundPongHandleKeyUp = this.handleKeyUp.bind(this);
 			this.boundPongHandleKeyDown = (e: Event) => this.handleKeyDown(e as KeyboardEvent);
       		this.boundPongHandleKeyUp = (e: Event) => this.handleKeyUp(e as KeyboardEvent);
-			//this.drawObjects = this.drawObjects.bind(this);
+		
 	
 			this.startButton.addEventListener("click", () => this.startGame());
 			this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
@@ -179,13 +170,9 @@ hideEndGameModal() {
 }
 
 showToast(message: string) {
-  // Set the message to the toast body
   this.toastBody.textContent = message;
 
-  // Remove the 'hidden' class to display the toast
   this.toastNotification.classList.remove('hidden');
-
-  // Optional: Add a fade-in effect
   this.toastNotification.classList.add('fade-in');
 
   // Automatically hide after 3 seconds
@@ -201,8 +188,6 @@ showToast(message: string) {
   }, 3000);
 }
 
-
-	
 		setupGame(): void {
 			this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2,
 				this.pWidth, this.pHeight, "left", this.colors.p1, this.pSpeed, this.cvs.height,
@@ -211,7 +196,6 @@ showToast(message: string) {
 			this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2,
 				this.pWidth, this.pHeight, "right", this.gamemode === "AI" ? "#FFF" : this.colors.p2, this.pSpeed, this.cvs.height,
 				this.gamemode === "AI", this);
-	
 			this.ball = new Ball(this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 			this.colorBoxLeft.style.backgroundColor = this.colors.p1;
 			this.colorBoxRight.style.backgroundColor = this.gamemode === "AI" ? "#FFF" : this.colors.p2;
@@ -239,10 +223,10 @@ showToast(message: string) {
 	
 	initTournamentMatch(): void {
 		console.log("Current Match:", this.currentMatch);
-console.log("Left Paddle:", this.leftPad);
-console.log("Right Paddle:", this.rightPad);
-console.log("Ball:", this.ball);
-console.log("Context:", this.ctx);
+		console.log("Left Paddle:", this.leftPad);
+		console.log("Right Paddle:", this.rightPad);
+		console.log("Ball:", this.ball);
+		console.log("Context:", this.ctx);
 
 		this.currentMatch = this.tournament!.getCurrentPlayers();
 		
@@ -255,11 +239,8 @@ console.log("Context:", this.ctx);
 		this.rightPaddleName.textContent = this.usernames[this.currentMatch.right];
 		
 		this.modalColorBox1 = document.getElementById('colorBox1')!;
-this.modalColorBox2 = document.getElementById('colorBox2')!;
-
-		//this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+		this.modalColorBox2 = document.getElementById('colorBox2')!;
 		this.colorBoxLeft.style.backgroundColor = this.colors[this.currentMatch.left];
-		//this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 		this.colorBoxRight.style.backgroundColor = this.colors[this.currentMatch.right];
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 
@@ -276,32 +257,23 @@ this.modalColorBox2 = document.getElementById('colorBox2')!;
 		this.rightScore.textContent = "0";
 		this.gameStarted = false;
 		this.startButton.style.display = "block";
-		//this.startButton.disabled = false;
-	//this.startButton = document.getElementById('btnStart') as HTMLButtonElement;
 	(this.startButton as HTMLButtonElement).disabled = false;
 		this.timer.reset();
 
-		// 🔍 Debugging logs:
+		// Debugging logs:
 		console.log("Current Match:", this.currentMatch);
 		console.log("Left Paddle:", this.leftPad);
 		console.log("Right Paddle:", this.rightPad);
 		console.log("Ball:", this.ball);
 		console.log("Context:", this.ctx);
 	
-		// Check if context is null
-		if (!this.ctx) {
+		if (!this.ctx)
 			console.error("❌ Canvas context is null. Initialization failed.");
-		}
-	
-		// Check if paddles are null or undefined
-		if (!this.leftPad || !this.rightPad) {
+
+		if (!this.leftPad || !this.rightPad) 
 			console.error("❌ Paddles not initialized correctly.");
-		}
-	
-		// Check if ball is null or undefined
-		if (!this.ball) {
+		if (!this.ball) 
 			console.error("❌ Ball not initialized correctly.");
-		}
 	}
 
 	resetGame(): void {
@@ -315,17 +287,13 @@ this.modalColorBox2 = document.getElementById('colorBox2')!;
 			this.rightScore.textContent = "0";
 			this.gameStarted = false;
 			this.startButton.style.display = "block";
-			//this.startButton.disabled = false;
 			(this.startButton as HTMLButtonElement).disabled = false;
-
 			this.timer.reset();
 		}
 	}
 
 	startGame(): void {
-		//this.startButton.disabled = true;
 		(this.startButton as HTMLButtonElement).disabled = true;
-
 		this.startButton.style.display = "none";
 		this.gameStarted = true;
 		this.gameOver = false;
@@ -355,15 +323,11 @@ endGame(winner: string): void {
         console.warn("⚠️ matchEndLabel not found in the DOM. Showing toast instead.");
         this.showToast(`Game Over! Winner: ${winner}`);
     }
-
     this.endgameModalWinner.textContent = winner;
     this.endgameModalScore.textContent = this.leftPad.score + "-" + this.rightPad.score;
     this.endgameModalTime.textContent = this.timer.getTime();
     this.showEndGameModal();
 }
-
-
-	
 
 	async sendMatchData(winner: string): Promise<void> {
 		const date = new Date();
@@ -423,14 +387,11 @@ endGame(winner: string): void {
 				return;
 		}
 
-		if (response.status > 300) {
+		if (response.status > 300) 
 			console.log("Could not save game in user history. Is user logged ?")
-		} else if (response.status < 300) {
+		 else if (response.status < 300) 
 			updateTextForElem(this.toastBody, "game-saved");
-			// this.toastBootstrap.show();
-		}
 	}
-
 
 	pauseGame(): void {
 		if (this.gameStarted && !this.gameOver) {
@@ -570,7 +531,6 @@ endGame(winner: string): void {
 			}
 		}
 	};
-
 	stopGameLoop(): void {
 		this.timer.stop();
 		this.stopInterval();

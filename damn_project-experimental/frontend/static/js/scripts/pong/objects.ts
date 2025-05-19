@@ -1,9 +1,7 @@
 
-// @ts-ignore
 import { updateTextForElem } from "../../utils/languages.js";
 
-// declare const bootstrap: any;
-//import * as bootstrap from "bootstrap";
+
 
 export class Tournament {
 	playerNumber: number;
@@ -29,8 +27,6 @@ export class Tournament {
 		this.usernames = usernames;
 		this.tournamentOver = false;
 
-		// this.tournamentModal = new bootstrap.Modal(document.getElementById('tournamentModal') as HTMLElement);
-		// this.tournamentMatchEndModal = new bootstrap.Modal(document.getElementById('tournamentMatchEndModal') as HTMLElement);
 		this.playersTournament = document.getElementById('playersTournament');
 		this.matchTournament = document.getElementById('matchTournament');
 		this.winner = document.getElementById('matchWinner');
@@ -133,8 +129,7 @@ closeMatchEndModal() {
 			if (this.timeElapsed)
 				this.timeElapsed.textContent = this.pG.timer.getTime();
 
-			// this.tournamentMatchEndModal.show();
-            // this.pG.openMatchEndModal();
+
             this.openMatchEndModal();
 			this.matchId++;
 		}
@@ -400,7 +395,7 @@ export class Pad {
 	isAI: boolean;
 	score: number;
 	direction: string;
-	pG: any; // Should be typed as PongGame if available
+	pG: any; 
 	isMinimized: boolean;
 	refresh_rate: number;
 	lastAIUpdate: number;
@@ -423,7 +418,7 @@ export class Pad {
 		dy: number,
 		maxY: number,
 		isAI: boolean,
-		pongGame: any // Replace 'any' with proper PongGame type
+		pongGame: any 
 	) {
 		this.x = x;
 		this.y = y;

@@ -1,5 +1,4 @@
 import AbstractView from "./AbstractView.js";
-// @ts-ignore
 import { BASE_URL } from "../index.js";
 
 export default class extends AbstractView {
