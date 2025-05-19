@@ -3,51 +3,111 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An aesthetic website to play pong and pacman.">
-    <title>satori</title>
+    <meta name="description" content="website to play pong">
+    <title>Quanta</title>
     <link rel="icon" href="/static/assets/UI/icons/s.svg">
     <link rel="stylesheet" href="/static/css/output.css">
     <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 
+    <style>
+      /* Particle Animation */
+      @keyframes drift {
+        0% {
+          transform: translateY(0px) translateX(0px);
+        }
+        50% {
+          transform: translateY(-10px) translateX(5px);
+        }
+        100% {
+          transform: translateY(0px) translateX(0px);
+        }
+      }
+
+      /* Comet Animation */
+      @keyframes comet {
+        0% {
+          transform: translateX(0) translateY(0) scale(1);
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateX(800px) translateY(-500px) scale(0.5);
+          opacity: 0;
+        }
+      }
+    </style>
   </head>
 
-  <body class="bg-gray-900 text-white">
+  <body class="bg-gray-950 text-white relative overflow-hidden">
     <div id="upper-transition-rectangle"></div>
     <div id="lower-transition-rectangle"></div>
-<div class="bg-red-500 text-white p-4">Say Hi to Tailwind!</div>
 
-    <!-- The div where all the content of the page will be dynamically loaded -->
+    <div class="bg-red-500 text-white p-4">Say Hi to Tailwind!</div>
+
+    <!-- Main App Container -->
     <main id="app" class="min-h-screen flex items-center justify-center" tabindex="-1">
       <!-- Content will be loaded here dynamically -->
     </main>
 
-    <!-- The website background -->
-    <div class="background-noise" aria-hidden="true"></div>
-    <div class="gradient-bg" aria-hidden="true">
- 
-      <!-- The dynamic background -->
-      <svg xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-            <feColorMatrix in="blur" mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
-            <feBlend in="SourceGraphic" in2="goo" />
-          </filter>
-        </defs>
-      </svg>
+    <!-- Background Noise -->
+    <div class="absolute inset-0 pointer-events-none z-[-1] bg-gradient-to-r from-gray-900 to-black opacity-90"></div>
 
-      <!-- The animated gradient shapes -->
-       	<div class="gradients-container" style="display: none;"></div>
-      <!-- <div class="gradients-container hidden"> -->
-        <div class="g1"></div>
-        <div class="g2"></div>
-        <div class="g3"></div>
-        <div class="g4"></div>
-        <div class="g5"></div>
-        <div class="interactive"></div>
-      </div>
+    <!-- Starry Sky Background -->
+    <div class="absolute inset-0 pointer-events-none z-[-1]">
+      <div id="star-field" class="relative w-full h-full"></div>
     </div>
+
+    <script type="module">
+      // Configuration
+      const starCount = 150;    // Number of stars
+      const cometCount = 5;     // Number of comets
+      const starField = document.getElementById('star-field');
+
+      // Generate Stars
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('absolute', 'bg-white', 'rounded-full');
+        
+        // Random sizes and positions
+        const size = Math.random() * 2 + 1; // Between 1px and 3px
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+
+        // Subtle drifting animation
+        const duration = Math.random() * 5 + 3;
+        star.style.animation = `drift ${duration}s ease-in-out infinite alternate`;
+
+        // Append to the star field
+        starField.appendChild(star);
+      }
+
+      // Generate Comets
+      for (let i = 0; i < cometCount; i++) {
+        const comet = document.createElement('div');
+        comet.classList.add('absolute', 'bg-white', 'rounded-full', 'opacity-80');
+        
+        // Random size
+        comet.style.width = '2px';
+        comet.style.height = '2px';
+
+        // Random start position
+        comet.style.top = `${Math.random() * 80}%`;
+        comet.style.left = `${Math.random() * 80}%`;
+
+        // Animation
+        const duration = Math.random() * 15 + 10; // Slower, 10s to 25s
+        const delay = Math.random() * 20 + 10; // Random delay 10s to 30s
+        comet.style.animation = `comet ${duration}s linear ${delay}s infinite`;
+
+        // Append to the star field
+        starField.appendChild(comet);
+      }
+    </script>
 
     <script type="module" src="/static/js/index.js"></script>
   </body>

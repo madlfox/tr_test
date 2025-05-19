@@ -5,37 +5,57 @@ import { ids, BIG_TEXT, DEFAULT_TEXT } from '../index.js';
 
 export function settings(): void {
   // Graphics settings elements
-  const ultraRadio = document.getElementById("graphics-ultra-radio") as HTMLInputElement;
-  const mediumRadio = document.getElementById("graphics-medium-radio") as HTMLInputElement;
-  const noneRadio = document.getElementById("graphics-none-radio") as HTMLInputElement;
+  const onRadio = document.getElementById("graphics-on-radio") as HTMLInputElement;
+  const offRadio = document.getElementById("graphics-off-radio") as HTMLInputElement;
   const noiseCheckbox = document.getElementById("graphics-noise-checkbox") as HTMLInputElement;
 
+  // Background elements
   const gradientsContainer = document.querySelector('.gradients-container') as HTMLElement;
   const videoBackground = document.getElementById('video-background') as HTMLElement;
+  const starField = document.getElementById('star-field') as HTMLElement;
   const bgNoise = document.querySelector('.background-noise') as HTMLElement;
 
+
+/**
+   * Smoothly hides the element with a fade-out effect.
+   */
+  const fadeOut = (element: HTMLElement) => {
+    element.style.opacity = '1';
+    element.style.transition = 'opacity 0.5s ease-out';
+    element.style.opacity = '0';
+    setTimeout(() => {
+      element.style.display = 'none';
+    }, 500);
+  };
+
+  /**
+   * Smoothly shows the element with a fade-in effect.
+   */
+  const fadeIn = (element: HTMLElement) => {
+    element.style.display = 'block';
+    element.style.opacity = '0';
+    element.style.transition = 'opacity 0.5s ease-in';
+    setTimeout(() => {
+      element.style.opacity = '1';
+    }, 50);
+  };
+
   // ---- Graphic quality radios ----
-  ultraRadio.addEventListener("change", () => {
-    if (ultraRadio.checked) {
-      localStorage.setItem('graphics', 'ultra');
-      gradientsContainer.style.display = 'block';
-      videoBackground.style.display = 'none';
+  onRadio.addEventListener("change", () => {
+    if (onRadio.checked) {
+      localStorage.setItem('graphics', 'on');
+      fadeIn(gradientsContainer);
+      fadeIn(videoBackground);
+      fadeIn(starField);
     }
   });
 
-  mediumRadio.addEventListener("change", () => {
-    if (mediumRadio.checked) {
-      localStorage.setItem('graphics', 'medium');
-      gradientsContainer.style.display = 'none';
-      videoBackground.style.display = 'block';
-    }
-  });
-
-  noneRadio.addEventListener("change", () => {
-    if (noneRadio.checked) {
-      localStorage.setItem('graphics', 'none');
-      gradientsContainer.style.display = 'none';
-      videoBackground.style.display = 'none';
+  offRadio.addEventListener("change", () => {
+    if (offRadio.checked) {
+      localStorage.setItem('graphics', 'off');
+      fadeOut(gradientsContainer);
+      fadeOut(videoBackground);
+      fadeOut(starField);
     }
   });
 
@@ -55,19 +75,25 @@ export function settings(): void {
   // Apply stored graphics settings
   const graphicsSetting = localStorage.getItem('graphics');
   switch (graphicsSetting) {
-    case 'ultra':
-      ultraRadio.checked = true;
-      break;
-    case 'medium':
-      mediumRadio.checked = true;
+    case 'on':
+      onRadio.checked = true;
+      fadeIn(gradientsContainer);
+      fadeIn(videoBackground);
+      fadeIn(starField);
       break;
     default:
-      noneRadio.checked = true;
+      offRadio.checked = true;
+      fadeOut(gradientsContainer);
+      fadeOut(videoBackground);
+      fadeOut(starField);
   }
 
   // Apply stored noise setting
   if (localStorage.getItem('noise') === 'on') {
     noiseCheckbox.checked = true;
+    bgNoise.style.display = 'block';
+  } else {
+    bgNoise.style.display = 'none';
   }
 
   // ---- Language switcher ----
