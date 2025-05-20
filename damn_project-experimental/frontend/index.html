@@ -59,55 +59,47 @@
       <div id="star-field" class="relative w-full h-full"></div>
     </div>
 
-    <script type="module">
-      // Configuration
-      const starCount = 150;    // Number of stars
-      const cometCount = 5;     // Number of comets
-      const starField = document.getElementById('star-field');
+<!-- <script type="module">
+  const graphicsSetting = localStorage.getItem('graphics') || 'on';
+  const starField = document.getElementById('star-field');
 
-      // Generate Stars
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.classList.add('absolute', 'bg-white', 'rounded-full');
-        
-        // Random sizes and positions
-        const size = Math.random() * 2 + 1; // Between 1px and 3px
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+  if (graphicsSetting === 'on') {
+    const starCount = 150;
+    const cometCount = 5;
 
-        // Subtle drifting animation
-        const duration = Math.random() * 5 + 3;
-        star.style.animation = `drift ${duration}s ease-in-out infinite alternate`;
+    // Generate Stars
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('absolute', 'bg-white', 'rounded-full');
+      const size = Math.random() * 2 + 1;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+      star.style.animation = `drift ${Math.random() * 5 + 3}s ease-in-out infinite alternate`;
+      starField.appendChild(star);
+    }
 
-        // Append to the star field
-        starField.appendChild(star);
-      }
+    // Generate Comets
+    for (let i = 0; i < cometCount; i++) {
+      const comet = document.createElement('div');
+      comet.classList.add('absolute', 'bg-white', 'rounded-full', 'opacity-80');
+      comet.style.width = '2px';
+      comet.style.height = '2px';
+      comet.style.top = `${Math.random() * 80}%`;
+      comet.style.left = `${Math.random() * 80}%`;
+      comet.style.animation = `comet ${Math.random() * 15 + 10}s linear ${Math.random() * 20 + 10}s infinite`;
+      starField.appendChild(comet);
+    }
+  } else {
+    // If graphics are off, hide the whole starfield just in case
+    if (starField) {
+      starField.style.display = 'none';
+    }
+  }
+</script> -->
 
-      // Generate Comets
-      for (let i = 0; i < cometCount; i++) {
-        const comet = document.createElement('div');
-        comet.classList.add('absolute', 'bg-white', 'rounded-full', 'opacity-80');
-        
-        // Random size
-        comet.style.width = '2px';
-        comet.style.height = '2px';
-
-        // Random start position
-        comet.style.top = `${Math.random() * 80}%`;
-        comet.style.left = `${Math.random() * 80}%`;
-
-        // Animation
-        const duration = Math.random() * 15 + 10; // Slower, 10s to 25s
-        const delay = Math.random() * 20 + 10; // Random delay 10s to 30s
-        comet.style.animation = `comet ${duration}s linear ${delay}s infinite`;
-
-        // Append to the star field
-        starField.appendChild(comet);
-      }
-    </script>
 
     <script type="module" src="/static/js/index.js"></script>
   </body>

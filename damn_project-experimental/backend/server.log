@@ -311,3 +311,14 @@
 {"level":30,"time":1747657776737,"pid":18,"hostname":"5c7a0b09a007","msg":"Server listening at http://0.0.0.0:8080"}
 {"level":30,"time":1747658200481,"pid":18,"hostname":"9009177b2c83","msg":"Server listening at http://0.0.0.0:8080"}
 {"level":30,"time":1747658713633,"pid":18,"hostname":"2d3e171b936d","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1747735071055,"pid":18,"hostname":"7e74f359277f","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1747735838826,"pid":18,"hostname":"6d9d5bf3f5ea","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1747736373919,"pid":17,"hostname":"a3063e61b92f","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1747737185346,"pid":18,"hostname":"62725104ce8a","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1747738202887,"pid":18,"hostname":"c58dc66a8917","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1747738259686,"pid":18,"hostname":"c58dc66a8917","reqId":"req-1","req":{"method":"GET","url":"/api/profile","hostname":"localhost","remoteAddress":"172.18.0.4","remotePort":47444},"msg":"incoming request"}
+{"level":30,"time":1747738259692,"pid":18,"hostname":"c58dc66a8917","reqId":"req-1","res":{"statusCode":401},"responseTime":3.783712999895215,"msg":"request completed"}
+{"level":30,"time":1747738264225,"pid":18,"hostname":"c58dc66a8917","reqId":"req-2","req":{"method":"GET","url":"/api/profile","hostname":"localhost","remoteAddress":"172.18.0.4","remotePort":47452},"msg":"incoming request"}
+{"level":30,"time":1747738264226,"pid":18,"hostname":"c58dc66a8917","reqId":"req-2","res":{"statusCode":401},"responseTime":0.5983559996820986,"msg":"request completed"}
+{"level":30,"time":1747738275777,"pid":18,"hostname":"c58dc66a8917","reqId":"req-3","req":{"method":"GET","url":"/api/profile","hostname":"localhost","remoteAddress":"172.18.0.4","remotePort":33864},"msg":"incoming request"}
+{"level":30,"time":1747738275778,"pid":18,"hostname":"c58dc66a8917","reqId":"req-3","res":{"statusCode":401},"responseTime":0.5395240001380444,"msg":"request completed"}

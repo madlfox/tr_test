@@ -15,34 +15,19 @@
 				<p class="text-white h4" data-translate="graphics">graphics</p>
 			</div>
 		</div>
-		<div class="row justify-content-center mb-3">
-			<fieldset class="col-12 text-center">
-				<div class="form-check">
-					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-ultra-radio">
-					<label class="form-check-label text-white clickable" for="graphics-ultra-radio" data-translate="ultra">
-					  	ultra
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-medium-radio">
-					<label class="form-check-label text-white clickable" for="graphics-medium-radio" data-translate="medium">
-						medium
-					</label>
-				</div>
-				<div class="form-check">
-					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-none-radio">
-					<label class="form-check-label text-white clickable" for="graphics-none-radio" data-translate="none">
-						none
-					</label>
-				</div>
-			</fieldset>
-		</div>
+		<!-- Graphics On/Off Radios -->
 		<div class="row justify-content-center mb-3">
 			<div class="col-12 text-center">
-				<div class="form-check">
-					<input class="form-check-input custom-checkbox" type="checkbox" value="" id="graphics-noise-checkbox">
-					<label class="form-check-label text-white clickable" for="graphics-noise-checkbox" data-translate="noise">
-						grainy
+				<div class="form-check form-check-inline">
+					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-on-radio" value="on">
+					<label class="form-check-label text-white clickable" for="graphics-on-radio" data-translate="graphics on">
+						graphics on
+					</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-off-radio" value="off">
+					<label class="form-check-label text-white clickable" for="graphics-off-radio" data-translate="graphics off">
+						graphics off
 					</label>
 				</div>
 			</div>
@@ -73,7 +58,7 @@
 			</div>
 		</div>
 		<div class="row justify-content-center mb-1">
-			<div class="col-12 text-center ">
+			<div class="col-12 text-center">
 				<label for="languageSwitcher" class="text-white" data-translate="select language">language:</label>
 				<select id="languageSwitcher">
 					<option value="en">English</option>
@@ -84,7 +69,6 @@
 				</select>
 			</div>
 		</div>
-		
 	</div>
 
 	<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3 mt-5" href="/" data-link>

@@ -104,6 +104,9 @@
 
 // window.addEventListener("popstate", router);
 // ------------------------------- IMPORT VIEWS -------------------------------
+//@ts-ignore
+import { createStarsAndComets, removeStarsAndComets } from './visual/starfield.js';
+
 import Home from "./views/Home.js";
 import NotFound from "./views/NotFound.js";
 import Pong from "./views/Pong.js";
@@ -165,6 +168,16 @@ let view: View | null = null;
 //
 // ============================== TAILWIND REFRESH ==============================
 //
+
+function updateGraphicsBackground() {
+  const graphicsSetting = localStorage.getItem('graphics') || 'on';
+  if (graphicsSetting === 'on') {
+    createStarsAndComets();
+  } else {
+    removeStarsAndComets();
+  }
+}
+
 function refreshTailwind() {
     const elements = document.querySelectorAll("#app *");
     elements.forEach((el) => {
@@ -279,6 +292,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	initLoadTransition();
 	initInteractiveBubble();
 	await applySettings();
+    updateGraphicsBackground(); // 👈 Add this
 	router();
 });
 

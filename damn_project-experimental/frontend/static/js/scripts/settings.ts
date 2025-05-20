@@ -1,123 +1,82 @@
 import { setLanguage } from '../utils/languages.js';
-import { moveNoise } from '../visual/effects.js';
+import { createStarsAndComets, removeStarsAndComets } from '../visual/starfield.js';
 //@ts-ignore
 import { ids, BIG_TEXT, DEFAULT_TEXT } from '../index.js';
-
 export function settings(): void {
-  // Graphics settings elements
-  const onRadio = document.getElementById("graphics-on-radio") as HTMLInputElement;
-  const offRadio = document.getElementById("graphics-off-radio") as HTMLInputElement;
-  const noiseCheckbox = document.getElementById("graphics-noise-checkbox") as HTMLInputElement;
+  // Radios
+  const graphicsOnRadio = document.getElementById("graphics-on-radio") as HTMLInputElement | null;
+  const graphicsOffRadio = document.getElementById("graphics-off-radio") as HTMLInputElement | null;
+  const gradientsContainer = document.querySelector('.gradients-container') as HTMLElement | null;
+  const videoBackground = document.getElementById('video-background') as HTMLElement | null;
+  const languageSwitcher = document.getElementById('languageSwitcher') as HTMLSelectElement | null;
+  const bigTextCheckbox = document.getElementById('big-text-checkbox') as HTMLInputElement | null;
 
-  // Background elements
-  const gradientsContainer = document.querySelector('.gradients-container') as HTMLElement;
-  const videoBackground = document.getElementById('video-background') as HTMLElement;
-  const starField = document.getElementById('star-field') as HTMLElement;
-  const bgNoise = document.querySelector('.background-noise') as HTMLElement;
-
-
-/**
-   * Smoothly hides the element with a fade-out effect.
-   */
-  const fadeOut = (element: HTMLElement) => {
-    element.style.opacity = '1';
-    element.style.transition = 'opacity 0.5s ease-out';
-    element.style.opacity = '0';
-    setTimeout(() => {
-      element.style.display = 'none';
-    }, 500);
-  };
-
-  /**
-   * Smoothly shows the element with a fade-in effect.
-   */
-  const fadeIn = (element: HTMLElement) => {
-    element.style.display = 'block';
-    element.style.opacity = '0';
-    element.style.transition = 'opacity 0.5s ease-in';
-    setTimeout(() => {
-      element.style.opacity = '1';
-    }, 50);
-  };
-
-  // ---- Graphic quality radios ----
-  onRadio.addEventListener("change", () => {
-    if (onRadio.checked) {
-      localStorage.setItem('graphics', 'on');
-      fadeIn(gradientsContainer);
-      fadeIn(videoBackground);
-      fadeIn(starField);
-    }
-  });
-
-  offRadio.addEventListener("change", () => {
-    if (offRadio.checked) {
-      localStorage.setItem('graphics', 'off');
-      fadeOut(gradientsContainer);
-      fadeOut(videoBackground);
-      fadeOut(starField);
-    }
-  });
-
-  // ---- Noise toggle ----
-  noiseCheckbox.addEventListener("change", () => {
-    if (noiseCheckbox.checked) {
-      localStorage.setItem('noise', 'on');
-      bgNoise.style.display = 'block';
-      ids.moveNoiseInterval = window.setInterval(moveNoise, 100);
+  function updateGraphicsUI(setting: string): void {
+    if (gradientsContainer) gradientsContainer.style.display = (setting === 'on') ? 'block' : 'none';
+    if (videoBackground) videoBackground.style.display = 'none';
+    if (setting === 'on') {
+      createStarsAndComets();
     } else {
-      localStorage.setItem('noise', 'off');
-      bgNoise.style.display = 'none';
-      clearInterval(ids.moveNoiseInterval);
+      removeStarsAndComets();
     }
-  });
-
-  // Apply stored graphics settings
-  const graphicsSetting = localStorage.getItem('graphics');
-  switch (graphicsSetting) {
-    case 'on':
-      onRadio.checked = true;
-      fadeIn(gradientsContainer);
-      fadeIn(videoBackground);
-      fadeIn(starField);
-      break;
-    default:
-      offRadio.checked = true;
-      fadeOut(gradientsContainer);
-      fadeOut(videoBackground);
-      fadeOut(starField);
   }
 
-  // Apply stored noise setting
-  if (localStorage.getItem('noise') === 'on') {
-    noiseCheckbox.checked = true;
-    bgNoise.style.display = 'block';
-  } else {
-    bgNoise.style.display = 'none';
+  // Attach radio events (null-checked)
+  if (graphicsOnRadio) {
+    graphicsOnRadio.addEventListener("change", () => {
+      if (graphicsOnRadio.checked) {
+        localStorage.setItem('graphics', 'on');
+        updateGraphicsUI('on');
+      }
+    });
+  }
+  if (graphicsOffRadio) {
+    graphicsOffRadio.addEventListener("change", () => {
+      if (graphicsOffRadio.checked) {
+        localStorage.setItem('graphics', 'off');
+        updateGraphicsUI('off');
+      }
+    });
+  }
+
+  // --- Apply stored setting to UI on load ---
+  const storedSetting = localStorage.getItem('graphics') || 'on';
+  if (graphicsOnRadio && graphicsOffRadio) {
+    if (storedSetting === 'on') {
+      graphicsOnRadio.checked = true;
+      updateGraphicsUI('on');
+    } else {
+      graphicsOffRadio.checked = true;
+      updateGraphicsUI('off');
+    }
   }
 
   // ---- Language switcher ----
-  const languageSwitcher = document.getElementById('languageSwitcher') as HTMLSelectElement;
-  languageSwitcher.addEventListener('change', (event) => {
-    const value = (event.target as HTMLSelectElement).value;
-    setLanguage(value);
-    localStorage.setItem('language', value);
-  });
-  languageSwitcher.value = localStorage.getItem('language') ?? 'en';
+  if (languageSwitcher) {
+    languageSwitcher.addEventListener('change', (event: Event) => {
+      const target = event.target as HTMLSelectElement;
+      if (target) {
+        setLanguage(target.value);
+        localStorage.setItem('language', target.value);
+      }
+    });
+    languageSwitcher.value = localStorage.getItem('language') ?? 'en';
+  }
 
   // ---- Big text toggle ----
-  const bigTextCheckbox = document.getElementById('big-text-checkbox') as HTMLInputElement;
-  bigTextCheckbox.addEventListener('change', () => {
-    if (bigTextCheckbox.checked) {
+  if (bigTextCheckbox) {
+    bigTextCheckbox.addEventListener('change', () => {
+      if (bigTextCheckbox.checked) {
+        document.documentElement.style.fontSize = BIG_TEXT;
+        localStorage.setItem('bigText', 'on');
+      } else {
+        document.documentElement.style.fontSize = DEFAULT_TEXT;
+        localStorage.setItem('bigText', 'off');
+      }
+    });
+    if (localStorage.getItem('bigText') === 'on') {
+      bigTextCheckbox.checked = true;
       document.documentElement.style.fontSize = BIG_TEXT;
-      localStorage.setItem('bigText', 'on');
-    } else {
-      document.documentElement.style.fontSize = DEFAULT_TEXT;
-      localStorage.setItem('bigText', 'off');
     }
-  });
-  if (localStorage.getItem('bigText') === 'on') {
-    bigTextCheckbox.checked = true;
-    document.documentElement.style.fontSize = BIG_TEXT;
   }
 }
